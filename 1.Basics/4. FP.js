@@ -1,3 +1,44 @@
+/**
+ * Parses the CSV text and returns a function to replace city names in a given text
+ * @param {string} textCSV - The CSV text to parse
+ * @returns {function} - A function to replace city names in a given text
+ */
+function parserCSV(textCSV) {
+    // Split the text into lines, remove comment lines, and map the lines to objects
+    textCSV = textCSV
+        .split("\n")
+        .filter(textCSV => /^(?!#).+$/gim.test(textCSV))
+        .map(textCSV => {
+            textCSV = textCSV.replace("#", "").split(",");
+
+            return { 'x': textCSV[0], 'y': textCSV[1], 'name': textCSV[2], 'population': textCSV[3] }
+        })
+        .sort((a, b) => b.population - a.population) // Sort the objects by population in descending order
+        .slice(0, 9) // Get the top 10 objects
+        .reduce(function (allCities, current) {
+            allCities[current.name] = { 'population': current.population, 'rating': Object.keys(allCities).length + 1 }
+
+            return allCities
+        }, {}); // Convert the objects into a single object with city names as keys and population and rating as values
+
+    /**
+     * Replaces city names in the given text with modified text
+     * @param {string} text - The text to replace city names in
+     * @returns {string} - The modified text with replaced city names
+     */
+    return function replaceInText(text) {
+        for (city in textCSV) {
+            if (text.includes(city)) {
+                // Replace city names with modified text
+                text = text.replace(
+                    `${city}`,
+                    `${city} (${textCSV[city].rating} місце в ТОП-10 найбільших міст України, населення ${textCSV[city].population} чоловік)`
+                );
+            }
+        }
+        return text;
+    };
+}
 
 let test111CSV = `44.38,34.33,Алушта,31440,
 49.46,30.17,Біла Церква,200131,
@@ -18,40 +59,6 @@ let test111CSV = `44.38,34.33,Алушта,31440,
 
 # в этом файле три строки-коммента :)`
 
-
-function parserCSV(textCSV) {
-    textCSV = textCSV
-    .split("\n")
-    .filter(textCSV => /^(?!#).+$/gim.test(textCSV))
-    .map(textCSV => {
-        textCSV = textCSV.replace("#","").split(",");
-
-        return {'x': textCSV[0], 'y' : textCSV[1], 'name': textCSV[2], 'population': textCSV[3]}
-    
-    })
-    .sort((a, b) => b.population - a.population)
-    .slice(0,9)
-    .reduce(function(allCities, current){
-        allCities[current.name] = {'population': current.population, 'rating': Object.keys(allCities).length+1}
-
-        return allCities
-    },{});
-
-   return function replaceInText(text){ 
-    for (city in textCSV){
-        if (text.includes(city)){
-
-            text = text.replace(`${city}`,
-            `${city} (${textCSV[city].rating} місце в ТОП-10 найбільших міст України, населення ${textCSV[city].population} чоловік)`
-            )
-        }
-    }
-    return text
-   };
-}
-
 let test = parserCSV(test111CSV);
 test("Дніпро та Київ");
-console.log(test("Дніпро та Київ"))
-
-
+console.log(test("Дніпро та Київ"));
