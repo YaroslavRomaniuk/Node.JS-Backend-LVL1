@@ -2,17 +2,17 @@
 /**
  * Implements constructor of Product object with given parameters
  * 
- * @param {*} ID - id of product
- * @param {*} name - name of product
- * @param {*} description - description of product
- * @param {*} price - price of product
- * @param {*} brand - brand of product
- * @param {*} sizes - array with sizes of product
- * @param {*} activeSize - active size of product
- * @param {*} quantity - quantity of product
- * @param {*} date - date of product
- * @param {*} reviews - array with reviews of product
- * @param {*} images - array with images of product
+ * @param {string} ID - id of product
+ * @param {string} name - name of product
+ * @param {string} description - description of product
+ * @param {number} price - price of product
+ * @param {string} brand - brand of product
+ * @param {Array} sizes - array with sizes of product
+ * @param {string} activeSize - active size of product
+ * @param {number} quantity - quantity of product
+ * @param {date} date - date of product
+ * @param {Array} reviews - array with reviews of product
+ * @param {Array} images - array with images of product
  */
 function Product(ID = "00000", name = "noName", description = "noDescription",
     price = "noPrice", brand = "noBrand", sizes = "noSizes", activeSize = "noActiveSize",
@@ -122,7 +122,7 @@ function Product(ID = "00000", name = "noName", description = "noDescription",
     /**
      * returns review by given ID
      * 
-     * @param {*} dataID - ID of review
+     * @param {string} dataID - ID of review
      * @returns review with given ID
      */
     this.getReviewByID = function (dataID) {
@@ -138,7 +138,7 @@ function Product(ID = "00000", name = "noName", description = "noDescription",
     /**
      * returns image by given parameter
      * 
-     * @param {*} dataImage - parameter of image
+     * @param {string} dataImage - parameter of image
      * @returns image by given parameter
      */
     this.getImage = function (dataImage) {
@@ -158,8 +158,8 @@ function Product(ID = "00000", name = "noName", description = "noDescription",
     /**
      * adds or deletes size to array with sizes
      * 
-     * @param {*} sizeToAdd - size which need to be added
-     * @param {*} sizeToDelete - size which need to be deleted
+     * @param {string} sizeToAdd - size which need to be added
+     * @param {string} sizeToDelete - size which need to be deleted
      */
     this.addSize = function (sizeToAdd) {
         if (!sizes.includes(sizeToAdd)) {
@@ -176,8 +176,8 @@ function Product(ID = "00000", name = "noName", description = "noDescription",
     /**
      * adds or deletes review to array with reviews
      * 
-     * @param {*} reviewToAdd - review which need to be added
-     * @param {*} reviewIDToDelete - review ID which need to be deleted
+     * @param {reviews} reviewToAdd - review which need to be added
+     * @param {reviews} reviewIDToDelete - review ID which need to be deleted
      */
     this.addReview = function (reviewToAdd) {
         reviews.push(reviewToAdd);
@@ -215,11 +215,11 @@ function Product(ID = "00000", name = "noName", description = "noDescription",
 /**
  * Implements constructor of Reviews object with given parameters
  * 
- * @param {*} ID - id of review
- * @param {*} author - author of review
- * @param {*} date  - date of review
- * @param {*} comment - comment of review
- * @param {*} rating - array with raiting for different parameters
+ * @param {number} ID - id of review
+ * @param {string} author - author of review
+ * @param {date} date  - date of review
+ * @param {string} comment - comment of review
+ * @param {number} rating - array with raiting for different parameters
  */
 function Reviews(ID = "noID", author = "noAuthor", date = "noDate", comment = "noComment",
     rating = { service: "noInfo", price: "noInfo", value: "noInfo", quality: "noInfo" }) {
@@ -233,8 +233,8 @@ function Reviews(ID = "noID", author = "noAuthor", date = "noDate", comment = "n
 /**
  * Implements constructor of Search object with functionality of searching product in array by given parameters
  * 
- * @param {*} products - array with products
- * @param {*} search - parameter of searching process
+ * @param {Array} products - array with products
+ * @param {string} search - parameter of searching process
  * @returns array with products which have given parameter
  */
 function Search(products, search) {
@@ -252,8 +252,8 @@ function Search(products, search) {
 /**
  * Implements constructor of Search object with functionality of sorting array with products by given parameter
  * 
- * @param {*} products - array with products
- * @param {*} sortRule - parameter of sorting process
+ * @param {Array} products - array with products
+ * @param {string} sortRule - parameter of sorting process
  * @returns array with products sorted by given parameter
  */
 function Sort(products, sortRule) {

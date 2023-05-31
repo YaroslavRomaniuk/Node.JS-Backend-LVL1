@@ -1,15 +1,15 @@
 /**
  * Implements constructor of Product object with given parameters
  * 
- * @param {*} ID - id of product
- * @param {*} name - name of product
- * @param {*} description - description of product
- * @param {*} price - price of product
- * @param {*} brand - brand of product
- * @param {*} quantity - quantity of product
- * @param {*} date - date of product
- * @param {*} reviews - array with reviews of product
- * @param {*} images - array with images of product
+ * @param {string} ID - id of product
+ * @param {string} name - name of product
+ * @param {string} description - description of product
+ * @param {number} price - price of product
+ * @param {string} brand - brand of product
+ * @param {number} quantity - quantity of product
+ * @param {date} date - date of product
+ * @param {Array} reviews - array with reviews of product
+ * @param {Array} images - array with images of product
  */
 function AbstractProduct(ID = "00000", name = "noName", description = "noDescription",
     price = "noPrice", brand = "noBrand",
@@ -100,7 +100,7 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
     /**
      * returns review by given ID
      * 
-     * @param {*} dataID - ID of review
+     * @param {string} dataID - ID of review
      * @returns review with given ID
      */
     AbstractProduct.prototype.getReviewByID = function (dataID) {
@@ -116,7 +116,7 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
     /**
      * returns image by given parameter
      * 
-     * @param {*} dataImage - parameter of image
+     * @param {string} dataImage - parameter of image
      * @returns image by given parameter
      */
     AbstractProduct.prototype.getImage = function (dataImage) {
@@ -137,8 +137,8 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
     /**
      * adds or deletes review to array with reviews
      * 
-     * @param {*} reviewToAdd - review which need to be added
-     * @param {*} reviewIDToDelete - review ID which need to be deleted
+     * @param {reviews} reviewToAdd - review which need to be added
+     * @param {reviews} reviewIDToDelete - review ID which need to be deleted
      */
     AbstractProduct.prototype.addReview = function (reviewToAdd) {
         this.reviews.push(reviewToAdd);
@@ -194,7 +194,7 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
     /**
      * return total price for given quantity of product
      * 
-     * @param {*} quantityToPrice - quantity of product to calculate total price
+     * @param {number} quantityToPrice - quantity of product to calculate total price
      * @returns total price
      */
     AbstractProduct.prototype.getPriceForQuantity = function (quantityToPrice) {
@@ -210,8 +210,8 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
     /**
      * universal getter-setter method which can works with every given parameter
      * 
-     * @param {*} param - given parameter to get or set
-     * @param {*} data - new data to set for given parameter
+     * @param {string} param - given parameter to get or set
+     * @param {parameterType} data - new data to set for given parameter
      * @returns given parameter
      */
     AbstractProduct.prototype.universalGetSet = function (param, data) {
@@ -226,11 +226,11 @@ function AbstractProduct(ID = "00000", name = "noName", description = "noDescrip
 /**
  * Implements constructor of Reviews object with given parameters
  * 
- * @param {*} ID - id of review
- * @param {*} author - author of review
- * @param {*} date  - date of review
- * @param {*} comment - comment of review
- * @param {*} rating - array with raiting for different parameters
+ * @param {string} ID - id of review
+ * @param {string} author - author of review
+ * @param {date} date  - date of review
+ * @param {string} comment - comment of review
+ * @param {number} rating - array with raiting for different parameters
  */
 function Reviews(ID = "noID", author = "noAuthor", date = "noDate", comment = "noComment",
     rating = { service: "noInfo", price: "noInfo", value: "noInfo", quality: "noInfo" }) {
@@ -244,8 +244,8 @@ function Reviews(ID = "noID", author = "noAuthor", date = "noDate", comment = "n
 /**
  * Implements constructor of Search object with functionality of searching product in array by given parameters
  * 
- * @param {*} products - array with products
- * @param {*} search - parameter of searching process
+ * @param {Array} products - array with products
+ * @param {string} search - parameter of searching process
  * @returns array with products which have given parameter
  */
 function Search(products, search) {
@@ -264,8 +264,8 @@ function Search(products, search) {
 /**
  * Implements constructor of Search object with functionality of sorting array with products by given parameter
  * 
- * @param {*} products - array with products
- * @param {*} sortRule - parameter of sorting process
+ * @param {Array} products - array with products
+ * @param {string} sortRule - parameter of sorting process
  * @returns array with products sorted by given parameter
  */
 function Sort(products, sortRule) {
@@ -314,19 +314,19 @@ function Sort(products, sortRule) {
 /**
  * Implements constructor of Clothes object with given parameters, which extends AbstractProduct
  * 
- * @param {*} ID - id of product
- * @param {*} name - name of product
- * @param {*} description - description of product
- * @param {*} price - price of product
- * @param {*} brand - brand of product
- * @param {*} sizes - array with sizes of product
- * @param {*} activeSize - active size of product
- * @param {*} quantity - quantity of product
- * @param {*} date - date of product
- * @param {*} reviews - array with reviews of product
- * @param {*} images - array with images of product
- * @param {*} material - material of product
- * @param {*} color - color of product
+ * @param {string} ID - id of product
+ * @param {string} name - name of product
+ * @param {string} description - description of product
+ * @param {number} price - price of product
+ * @param {string} brand - brand of product
+ * @param {Array} sizes - array with sizes of product
+ * @param {string} activeSize - active size of product
+ * @param {number} quantity - quantity of product
+ * @param {date} date - date of product
+ * @param {reviews} reviews - array with reviews of product
+ * @param {Array} images - array with images of product
+ * @param {string} material - material of product
+ * @param {string} color - color of product
  */
 function Clothes(ID, name, description,
     price, brand, quantity, date, reviews, images, 
@@ -381,8 +381,8 @@ Object.assign(Clothes.prototype, {
     /**
      * adds or deletes size to array with sizes
      * 
-     * @param {*} sizeToAdd - size which need to be added
-     * @param {*} sizeToDelete - size which need to be deleted
+     * @param {string} sizeToAdd - size which need to be added
+     * @param {string} sizeToDelete - size which need to be deleted
      */
     addSize (sizeToAdd) {
         if (!this.sizes.includes(sizeToAdd)) {
@@ -402,17 +402,17 @@ Object.assign(Clothes.prototype, {
 /**
  * Implements constructor of Electronics object with given parameters, which extends AbstractProduct
  * 
- * @param {*} ID - id of product
- * @param {*} name - name of product
- * @param {*} description - description of product
- * @param {*} price - price of product
- * @param {*} brand - brand of product
- * @param {*} quantity - quantity of product
- * @param {*} date - date of product
- * @param {*} reviews - array with reviews of product
- * @param {*} images - array with images of product
- * @param {*} warranty - warranty of product
- * @param {*} power - power of product
+ * @param {string} ID - id of product
+ * @param {string} name - name of product
+ * @param {string} description - description of product
+ * @param {number} price - price of product
+ * @param {string} brand - brand of product
+ * @param {number} quantity - quantity of product
+ * @param {date} date - date of product
+ * @param {reviews} reviews - array with reviews of product
+ * @param {Array} images - array with images of product
+ * @param {string} warranty - warranty of product
+ * @param {string} power - power of product
  */
 function Electronics(ID, name, description,
     price, brand,
@@ -452,9 +452,9 @@ Object.assign(Electronics.prototype, {
 /**
  * output in console result of test
  * 
- * @param {*} dataCheck - data with correct result
- * @param {*} getData - data after manipulation which should be compare with expected result
- * @param {*} testName - name of test
+ * @param {dataType} dataCheck - data with correct result
+ * @param {dataType} getData - data after manipulation which should be compare with expected result
+ * @param {string} testName - name of test
  */
 function testPassedOrNot (dataCheck, getData,testName){
     if(getData === dataCheck){
