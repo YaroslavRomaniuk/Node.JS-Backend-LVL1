@@ -6,7 +6,7 @@ let Validator = {
     /**
      * validates given email and return true if it fulfills regex requirments
      * 
-     * @param {*} email - given email
+     * @param {string} email - given email
      * @returns true if email is fulfill regex requirments
      */
     validateEmail:function(email){
@@ -18,7 +18,7 @@ let Validator = {
     /**
      * validates given phone and return true if it fulfills regex requirments
      * 
-     * @param {*} phone - given phone
+     * @param {string} phone - given phone
      * @returns true if phone is fulfill regex requirments
      */
     validatePhone:function(phone){
@@ -30,7 +30,7 @@ let Validator = {
     /**
      * validates given password and return true if it fulfills regex requirments
      * 
-     * @param {*} password - given password
+     * @param {string} password - given password
      * @returns true if password is fulfill regex requirments
      */
     validatePassword:function(password){
@@ -44,8 +44,8 @@ let Validator = {
 /**
  * output in console result of test
  * 
- * @param {*} result - boolean of result of test
- * @param {*} testName - name of test
+ * @param {boolean} result - boolean of result of test
+ * @param {string} testName - name of test
  */
 function testPassed (result,testName){
     if(result){
