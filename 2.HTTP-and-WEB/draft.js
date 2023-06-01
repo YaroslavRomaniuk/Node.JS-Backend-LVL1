@@ -1,23 +1,12 @@
-function readHttpLikeInput(){
-    var fs = require("fs");
-    var res = "";
-    var buffer = Buffer.alloc ? Buffer.alloc(1) : new Buffer(1);
-    let was10 = 0;
-    for(;;){ 
-        try { fs.readSync(0 /*stdin fd*/, buffer, 0, 1); } catch (e) {break; /* windows */}
-        if(buffer[0] === 10 || buffer[0] === 13) {
-            if (was10 > 10) 
-                break;
-            was10++;
-        } else 
-           was10 = 0;
-        res += new String(buffer);
-    }
+let string = `GET /doc/test.html HTTP/1.1 
+Host: www.test101.com 
+Accept: image/gif, image/jpeg, */* 
+Accept-Language: en-us 
+Accept-Encoding: gzip, deflate 
+User-Agent: Mozilla/4.0 
+Content-Length: 35
 
-    return res;
-}
-
-let contents = readHttpLikeInput();
+bookId=12345&author=Tan+Ah+Teck`;
 
 /**
  * Parses a TCP string representation of an HTTP request and returns an object containing the parsed data.
@@ -65,5 +54,5 @@ function parseTcpStringAsHttpRequest(string) {
   };
 }
 
-http = parseTcpStringAsHttpRequest(contents); 
-console.log(JSON.stringify(http, undefined, 2));
+let test = parseTcpStringAsHttpRequest(string);
+console.log(test);
