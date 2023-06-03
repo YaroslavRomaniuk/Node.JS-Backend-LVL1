@@ -8,6 +8,36 @@ Content-Length: 35
 
 bookId=12345&author=Tan+Ah+Teck`;
 
+let string2 = `GET /sum?nums=1,25,3 HTTP/1.1 
+Host: www.test101.com 
+Accept: image/gif, image/jpeg, */* 
+Accept-Language: en-us 
+Accept-Encoding: gzip, deflate 
+User-Agent: Mozilla/4.0 
+Content-Length: 35
+
+bookId=12345&author=Tan+Ah+Teck`;
+
+let string3 = `GET /?nums=1,25,3 HTTP/1.1 
+Host: www.test101.com 
+Accept: image/gif, image/jpeg, */* 
+Accept-Language: en-us 
+Accept-Encoding: gzip, deflate 
+User-Agent: Mozilla/4.0 
+Content-Length: 35
+
+bookId=12345&author=Tan+Ah+Teck`;
+
+let string4 = `GET /sum?=1,25,3 HTTP/1.1 
+Host: www.test101.com 
+Accept: image/gif, image/jpeg, */* 
+Accept-Language: en-us 
+Accept-Encoding: gzip, deflate 
+User-Agent: Mozilla/4.0 
+Content-Length: 35
+
+bookId=12345&author=Tan+Ah+Teck`;
+
 /**
  * Parses a TCP string representation of an HTTP request and returns an object containing the parsed data.
  * @param {string} string - The TCP string representation of the HTTP request.
@@ -44,8 +74,6 @@ function parseTcpStringAsHttpRequest(string) {
     bodyData = bufferArray[bufferArray.length - 1];
   }
 
-  console.log(headersData);
-
   return {
     method: methodData,
     uri: uriData,
@@ -54,5 +82,62 @@ function parseTcpStringAsHttpRequest(string) {
   };
 }
 
-let test = parseTcpStringAsHttpRequest(string);
-console.log(test);
+
+function processHttpRequest($method, $uri, $headers, $body) {
+
+  let statusCode,
+  statusMessage,
+  body;
+
+  if($method === "GET" && /^\/sum\?nums=/g.test($uri)){
+    
+    statusCode = "200";
+    statusMessage = "OK";
+    body = $uri.match(/\d+/g).reduce((partialSum, a) => partialSum + parseInt(a), 0);
+    outputHttpResponse(statusCode, statusMessage, body);
+  }
+  
+  if($method === "GET" && !/^\/sum/g.test($uri)) {
+
+    statusCode = "404";
+    statusMessage = "Not Found";
+    body = "not found";
+
+    outputHttpResponse(statusCode, statusMessage, body);
+  }
+
+  if($method !== "GET" || !/^\?nums=/g.test($uri)) {
+
+    statusCode = "400";
+    statusMessage = "Bad Request";
+    body = "bad request";
+
+    outputHttpResponse(statusCode, statusMessage, body);
+  }
+}
+
+
+function outputHttpResponse(statusCode, statusMessage, body) {
+
+  console.log(
+`HTTP/1.1 ${statusCode} ${statusMessage}
+Date: ${Date()}
+Server: Apache/2.2.14 (Win32)
+Content-Length: ${String(body).length}
+Connection: Closed
+Content-Type: text/html; charset=utf-8
+  
+${body}`);
+
+}
+
+
+let test = parseTcpStringAsHttpRequest(string2);
+let test2 = parseTcpStringAsHttpRequest(string3);
+let test3 = parseTcpStringAsHttpRequest(string4);
+//console.log(test);
+
+//let testRequest = processHttpRequest(test.method,test.uri,test.headers,test.body);
+//let testRequest2 = processHttpRequest(test2.method,test2.uri,test2.headers,test2.body);
+let testRequest3 = processHttpRequest(test3.method,test3.uri,test3.headers,test3.body);
+//outputHttpResponse(200,`OK`,"aaa: bbb","1234567test")
