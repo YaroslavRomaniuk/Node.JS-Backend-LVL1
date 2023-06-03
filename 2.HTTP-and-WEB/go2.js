@@ -32,7 +32,11 @@ function parseTcpStringAsHttpRequest(string) {
     key,
     value;
 
-  let bufferArray = string.split('\n');
+  let bufferArray = string.split('\n').filter(function (el) {
+    return el != '';
+  });
+
+  console.log(bufferArray);
   let startLine = bufferArray[0].split(' ');
 
   // Extract the method and URI from the start line
@@ -54,8 +58,6 @@ function parseTcpStringAsHttpRequest(string) {
   if (!bufferArray[bufferArray.length - 1].includes(":")) {
     bodyData = bufferArray[bufferArray.length - 1];
   }
-
-  console.log(headersData);
 
   return {
     method: methodData,

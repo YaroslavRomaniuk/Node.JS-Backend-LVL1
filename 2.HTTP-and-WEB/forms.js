@@ -99,48 +99,44 @@ function processHttpRequest($method, $uri, $headers, $body) {
    *                   { method, uri, headers, body }
    */
   
-  function parseTcpStringAsHttpRequest(string) {
+function parseTcpStringAsHttpRequest($string) {
     let methodData,
-      uriData,
-      headersData = {},
-      bodyData,
-      key,
-      value;
-  
-    let bufferArray = string.split('\n').filter(function (el) {
-      return el != '';
-    });
-  
-    console.log(bufferArray);
-    let startLine = bufferArray[0].split(' ');
-  
-    // Extract the method and URI from the start line
-    methodData = startLine[0];
-    uriData = startLine[1];
-  
-    // Iterate through the remaining lines to extract headers data
-    for (let i = 1; i < bufferArray.length; i++) {
-      let bufferStringArray;
-      if (bufferArray[i].includes(":")) {
-        bufferStringArray = bufferArray[i].split(": ");
-        key = bufferStringArray[0];
-        value = bufferStringArray[1];
-        headersData[key] = value;
-      }
+    uriData,
+    headersData = {},
+    bodyData,
+    key,
+    value;
+
+  let bufferArray = $string.split('\n');
+  let startLine = bufferArray[0].split(' ');
+
+  // Extract the method and URI from the start line
+  methodData = startLine[0];
+  uriData = startLine[1];
+
+  // Iterate through the remaining lines to extract headers data
+  for (let i = 1; i < bufferArray.length; i++) {
+    let bufferStringArray;
+    if (bufferArray[i].includes(":")) {
+      bufferStringArray = bufferArray[i].split(": ");
+      key = bufferStringArray[0];
+      value = bufferStringArray[1];
+      headersData[key] = value;
     }
-  
-    // Check if the last line contains the body data
-    if (!bufferArray[bufferArray.length - 1].includes(":")) {
-      bodyData = bufferArray[bufferArray.length - 1];
-    }
-  
-    return {
-      method: methodData,
-      uri: uriData,
-      headers: headersData,
-      body: bodyData,
-    };
   }
+
+  // Check if the last line contains the body data
+  if (!bufferArray[bufferArray.length - 1].includes(":")) {
+    bodyData = bufferArray[bufferArray.length - 1];
+  }
+
+  return {
+    method: methodData,
+    uri: uriData,
+    headers: headersData,
+    body: bodyData,
+  };
+}
 
 http = parseTcpStringAsHttpRequest(contents);
 processHttpRequest(http.method, http.uri, http.headers, http.body);

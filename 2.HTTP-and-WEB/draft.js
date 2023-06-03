@@ -51,7 +51,11 @@ function parseTcpStringAsHttpRequest(string) {
     key,
     value;
 
-  let bufferArray = string.split('\n');
+  let bufferArray = string.split('\n').filter(function (el) {
+    return el != '';
+  });
+
+  //console.log(bufferArray);
   let startLine = bufferArray[0].split(' ');
 
   // Extract the method and URI from the start line
@@ -86,18 +90,18 @@ function parseTcpStringAsHttpRequest(string) {
 function processHttpRequest($method, $uri, $headers, $body) {
 
   let statusCode,
-  statusMessage,
-  body;
+    statusMessage,
+    body;
 
-  if($method === "GET" && /^\/sum\?nums=/g.test($uri)){
-    
+  if ($method === "GET" && /^\/sum\?nums=/g.test($uri)) {
+
     statusCode = "200";
     statusMessage = "OK";
     body = $uri.match(/\d+/g).reduce((partialSum, a) => partialSum + parseInt(a), 0);
     outputHttpResponse(statusCode, statusMessage, body);
   }
-  
-  if($method === "GET" && !/^\/sum/g.test($uri)) {
+
+  if ($method === "GET" && !/^\/sum/g.test($uri)) {
 
     statusCode = "404";
     statusMessage = "Not Found";
@@ -106,7 +110,7 @@ function processHttpRequest($method, $uri, $headers, $body) {
     outputHttpResponse(statusCode, statusMessage, body);
   }
 
-  if($method !== "GET" || !/^\?nums=/g.test($uri)) {
+  if ($method !== "GET" || !/^\?nums=/g.test($uri)) {
 
     statusCode = "400";
     statusMessage = "Bad Request";
@@ -120,7 +124,7 @@ function processHttpRequest($method, $uri, $headers, $body) {
 function outputHttpResponse(statusCode, statusMessage, body) {
 
   console.log(
-`HTTP/1.1 ${statusCode} ${statusMessage}
+    `HTTP/1.1 ${statusCode} ${statusMessage}
 Date: ${Date()}
 Server: Apache/2.2.14 (Win32)
 Content-Length: ${String(body).length}
@@ -132,12 +136,130 @@ ${body}`);
 }
 
 
-let test = parseTcpStringAsHttpRequest(string2);
-let test2 = parseTcpStringAsHttpRequest(string3);
-let test3 = parseTcpStringAsHttpRequest(string4);
+//let test = parseTcpStringAsHttpRequest(string2);
+//let test2 = parseTcpStringAsHttpRequest(string3);
+//let test3 = parseTcpStringAsHttpRequest(string4);
 //console.log(test);
 
 //let testRequest = processHttpRequest(test.method,test.uri,test.headers,test.body);
 //let testRequest2 = processHttpRequest(test2.method,test2.uri,test2.headers,test2.body);
-let testRequest3 = processHttpRequest(test3.method,test3.uri,test3.headers,test3.body);
+//let testRequest3 = processHttpRequest(test3.method,test3.uri,test3.headers,test3.body);
 //outputHttpResponse(200,`OK`,"aaa: bbb","1234567test")
+
+
+
+let string5 = `POST /api/checkLoginAndPassword HTTP/1.1
+Accept: */*
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/4.0
+Content-Length: 35
+
+login=student&password=1234
+`;
+
+let string6 = `POST /api/checkLoginAndPassword HTTP/1.1
+Accept: */*
+Content-Type: application/x-www-form-urlenco
+User-Agent: Mozilla/4.0
+Content-Length: 35
+
+login=student&password=12345
+`;
+
+let test5 = parseTcpStringAsHttpRequest(string5);
+//console.log(test5)
+let testOutput = processHttpRequest1(test5.method, test5.uri, test5.headers, test5.body);
+//let test6 = parseTcpStringAsHttpRequest(string6);
+//let testOutput2 = processHttpRequest1(test6.method,test6.uri,test6.headers,test6.body);
+
+function processHttpRequest1($method, $uri, $headers, $body) {
+
+  let statusCode,
+    statusMessage,
+    body;
+  //console.log($method);
+  //console.log($uri);
+  //console.log($headers['Content-Type']);
+  //console.log($body);
+
+  if ($method === "POST" && $uri === "/api/checkLoginAndPassword"
+    && $headers['Content-Type'] === "application/x-www-form-urlencoded") {
+
+    let bodyBuffer = $body.split(/[\=\&]+/);
+    let loginAndPass = {};
+    let loginPasswordDataBase = parseLoginPasswordDataBase("passwords111.txt");
+
+    loginAndPass[bodyBuffer[0]] = bodyBuffer[1];
+    loginAndPass[bodyBuffer[2]] = bodyBuffer[3];
+
+    //console.log(loginAndPass.login);
+    //console.log(loginAndPass.password);
+    //console.log(loginPasswordDataBase["student"]);
+
+    if (loginPasswordDataBase !== -1) {
+      if (loginPasswordDataBase.hasOwnProperty(loginAndPass.login)
+        && loginPasswordDataBase[loginAndPass.login] === loginAndPass.password) {
+
+        statusCode = "200";
+        statusMessage = "OK";
+        body = '<h1 style="color:green">FOUND</h1>';
+
+        outputHttpResponse(statusCode, statusMessage, body);
+      } else {
+        statusCode = "401";
+        statusMessage = "Unautorized";
+        body = '<h1 style="color:red">WRONG LOGIN OR PASSWORD</h1>';
+
+        outputHttpResponse(statusCode, statusMessage, body);
+      }
+    } else {
+      statusCode = "500";
+      statusMessage = "Internal Server Error";
+      body = '<h1 style="color:red">Internal Server Error</h1>';
+
+      outputHttpResponse(statusCode, statusMessage, body);
+    }
+
+
+  } else {
+    statusCode = "400";
+    statusMessage = "Bad Request";
+    body = "bad request";
+
+    outputHttpResponse(statusCode, statusMessage, body);
+
+  }
+}
+
+
+function parseLoginPasswordDataBase(filePath) {
+
+  let fs = require("fs");
+  let data;
+
+  if (fs.existsSync(filePath)) {
+    data = require("fs").readFileSync(filePath, "utf-8");
+
+    let dataBuffer = data.split('\r\n');
+
+    console.log(dataBuffer);
+    let loginPasswordDataBase = {};
+    let loginPasswordBuffer;
+
+    for (let i = 0; i < dataBuffer.length; i++) {
+      loginPasswordBuffer = dataBuffer[i].split(':');
+      loginPasswordDataBase[loginPasswordBuffer[0]] = loginPasswordBuffer[1];
+
+    }
+
+    return loginPasswordDataBase
+
+  } else {
+
+    return -1;
+  }
+
+
+
+}
+
