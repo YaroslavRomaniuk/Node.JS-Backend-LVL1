@@ -166,9 +166,9 @@ Content-Length: 35
 login=student&password=12345
 `;
 
-let test5 = parseTcpStringAsHttpRequest(string5);
+//let test5 = parseTcpStringAsHttpRequest(string5);
 //console.log(test5)
-let testOutput = processHttpRequest1(test5.method, test5.uri, test5.headers, test5.body);
+//let testOutput = processHttpRequest1(test5.method, test5.uri, test5.headers, test5.body);
 //let test6 = parseTcpStringAsHttpRequest(string6);
 //let testOutput2 = processHttpRequest1(test6.method,test6.uri,test6.headers,test6.body);
 
@@ -261,6 +261,76 @@ function parseLoginPasswordDataBase(filePath) {
 }
 
 
+
+let string7 = `GET /hey/hello.html HTTP/1.1
+Host: student.shpp.me 
+Accept: image/gif, image/jpeg, */* 
+Accept-Language: en-us 
+Accept-Encoding: gzip, deflate 
+User-Agent: Mozilla/4.0 
+Content-Length: 35
+
+bookId=12345&author=Tan+Ah+Teck
+`;
+
+let testFiles = parseTcpStringAsHttpRequest(string7);
+//console.log(test5)
+let testOutputFiles = processHttpRequest2(testFiles.method, testFiles.uri, testFiles.headers, testFiles.body);
+
+function processHttpRequest2($method, $uri, $headers, $body) {
+
+  let statusCode,
+    statusMessage,
+    body,
+    filePath,
+    hostContent;
+
+  if ($method !== "GET" || !/\w+.shpp.me/g.test($headers.Host)) {
+    statusCode = "404";
+    statusMessage = "Not Found";
+    body = "not found";
+
+    outputHttpResponse(statusCode, statusMessage, body);
+    return
+  } else {
+    hostContent = $headers.Host.split('.')[0];
+  }
+
+  if (hostContent === "student" || hostContent === "another") {
+    if ($uri !== "/") {
+      filePath = `${__dirname}./${hostContent}${$uri}`
+    } else {
+      filePath = `${__dirname}./${hostContent}/index.html`
+    }
+
+    if (!filePath.startsWith(__dirname)) {
+      statusCode = "403";
+      statusMessage = "Not Found";
+      body = "not found";
+
+      outputHttpResponse(statusCode, statusMessage, body);
+      return
+    }
+
+    let fs = require("fs");
+    let dataFile;
+    console.log($uri)
+
+    if (fs.existsSync(filePath)) {
+      dataFile = require("fs").readFileSync(filePath, "utf-8");
+      console.log(dataFile);
+    }
+    return dataFile;
+
+  } else {
+    statusCode = "404";
+    statusMessage = "Not Found";
+    body = "not found";
+
+    outputHttpResponse(statusCode, statusMessage, body);
+    return
+  }
+}
 
 
 
