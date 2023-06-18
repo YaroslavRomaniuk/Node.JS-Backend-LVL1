@@ -1,0 +1,61 @@
+.separator {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #000;
+}
+
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+.black-box1 {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    margin-top: 10px;
+    visibility: visible;
+
+}
+
+.button-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.box-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.black-box2 {
+    background-color: black;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    visibility: visible;
+}
+
+.yellow-box1 {
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+    margin-top: 10px;
+    visibility: visible;
+}
