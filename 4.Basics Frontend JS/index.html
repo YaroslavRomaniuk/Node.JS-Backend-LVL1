@@ -46,12 +46,39 @@
 
     <form id="form1" class="button-center" onsubmit="return false;">
         CSS Selector: <input type="text" id="userInput"><br>
-        <input type="submit" onclick="function6()">
+        <input type="submit" class="button-center" onclick="function6()">
     </form>
 
     <!-- ************TASK5************ -->
     <div class="separator">Task 5</div>
     <div id="box3" class="yellow-box1"></div>
+
+    <!-- ************TASK6************ -->
+    <div class="separator">Task 6</div>
+    <div id="box4" class="red-box1"></div>
+
+    <div class="button-center">
+        <button onmouseover="function81()" onmouseout="function82()" id="button6" type="submit">Try to hide</button>
+    </div>
+
+    <!-- ************TASK7************ -->
+    <div class="separator">Task 7</div>
+    <div id="box5" class="green-box1"></div>
+
+    <form id="form2" class="button-center" onsubmit="return false;">
+        Write something: <input onmouseover="function91()" oninput="function92()" type="text" id="userInput"><br>
+    </form>
+
+    <!-- ************TASK8************ -->
+    <div class="separator">Task 8</div>
+
+    <form id="form3" class="button-center" onsubmit="return false;">
+        Image Link: <input type="text" id="userInput2"><br>
+        <input type="submit" class="button-center" onclick="function10()">
+    </form>
+
+    <div id="imgContainer"></div>
+
 
 
     <script>
@@ -122,8 +149,58 @@
         }
 
         //********************TASK5********************
+        let clickCounter;
+        document.getElementById("box3").addEventListener("click", function7);
+
+        function function7() {
+            if (clickCounter === undefined) {
+                clickCounter = 1;
+            }
+            console.log(clickCounter);
 
 
+            if (clickCounter === 1) {
+                alert("Привіт!");
+                document.getElementById("box3").style.visibility = "visible";
+
+                clickCounter = 2;
+            } else {
+                alert("Бувай!");
+                document.getElementById("box3").style.visibility = "hidden";
+                clickCounter = 1;
+            }
+        }
+
+        //********************TASK6********************
+
+        function function81() {
+            document.getElementById("box4").style.visibility = "visible";
+        }
+
+        function function82() {
+            document.getElementById("box4").style.visibility = "hidden";
+        }
+
+        //********************TASK7********************
+        function function91() {
+            document.getElementById("box5").style.visibility = "visible";
+        }
+
+        function function92() {
+            document.getElementById("box5").style.visibility = "hidden";
+        }
+
+        //********************TASK8********************
+        function function10() {
+
+            console.log(document.getElementById("userInput2").value)
+            let img = document.createElement("img");
+            img.src = document.getElementById("userInput2").value;
+
+
+            let src = document.getElementById("imgContainer");
+            src.appendChild(img);
+        }
 
     </script>
 
