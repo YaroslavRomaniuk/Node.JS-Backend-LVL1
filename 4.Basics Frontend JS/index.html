@@ -80,7 +80,7 @@
     <div id="imgContainer"></div>
 
     <!-- ************TASK9************ -->
-    <div class="separator">Task 8</div>
+    <div class="separator">Task 9</div>
 
     <form id="form4" class="button-center" onsubmit="return false;">
         Image Links:<textarea id="userInput3" rows="4" cols="50"></textarea><br>
@@ -88,6 +88,48 @@
     </form>
 
     <div id="imgContainer2"></div>
+
+    <!-- ************TASK10-12************ -->
+    <div class="separator">Task 10-12</div>
+
+    <div id="display1" class="display-demo1" onmousemove="function121(event)" onmouseout="function122()">
+        <div id="box6" class="coordinate-box1">
+            <p id="coordinates1" style="text-align:center">
+                Coordinates
+            </p>
+        </div>
+
+        <div id="box7" class="language-box1">
+            <p id="language1" style="text-align:center">
+                Language
+            </p>
+        </div>
+
+        <div id="box8" class="userCoordinates-box1">
+            <p id="userCoordinates" style="text-align:center">
+                User Coordinates
+            </p>
+        </div>
+
+    </div>
+
+    <!-- ************TASK13************ -->
+    <div class="separator">Task 13</div>
+
+    <div class="box-row">
+        <div contentEditable="true" id="box9" class="editable-box1">
+            <p> Try me </p>
+        </div>
+        <div contentEditable="true" id="box10" class="editable-box1">
+            <p> Try me </p>
+        </div>
+        <div contentEditable="true" id="box11" class="editable-box1">
+            <p> Try me </p>
+        </div>
+    
+    </div>
+
+
 
 
 
@@ -221,13 +263,44 @@
             let links = document.getElementById("userInput3").value.split("\n")
             console.log(links)
 
-            for (let i = 0; i < links.length;i++){
+            for (let i = 0; i < links.length; i++) {
                 img = document.createElement("img");
                 img.src = links[i];
                 src.appendChild(img);
-            }       
-            
+            }
+
         }
+
+        //********************TASK10-12********************
+        function function121(e) {
+            let x = e.clientX;
+            let y = e.clientY;
+            let coor = "Coordinates: (" + x + "," + y + ")";
+            document.getElementById("coordinates1").innerHTML = coor;
+        }
+
+        function function122() {
+            document.getElementById("coordinates1").innerHTML = "Coordinates";
+        }
+
+        let userLang = navigator.language || navigator.userLanguage;
+        document.getElementById("language1").innerHTML = "The language is: " + userLang;
+
+
+        let userCoordinates = document.getElementById("userCoordinates");
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                userCoordinates.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        
+
+        function showPosition(position) {
+            userCoordinates.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+        }
+
 
 
     </script>
