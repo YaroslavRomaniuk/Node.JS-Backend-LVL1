@@ -117,16 +117,16 @@
     <div class="separator">Task 13</div>
 
     <div class="box-row">
-        <div contentEditable="true" id="box9" class="editable-box1">
-            <p> Try me </p>
+        <div contentEditable="true" id="box9" class="editable-box1" oninput="function131()">
+            <p id="content1"> Try me </p>
         </div>
-        <div contentEditable="true" id="box10" class="editable-box1">
-            <p> Try me </p>
+        <div contentEditable="true" id="box10" class="editable-box1" oninput="function131()">
+            <p id="content2"> Try me </p>
         </div>
-        <div contentEditable="true" id="box11" class="editable-box1">
-            <p> Try me </p>
+        <div contentEditable="true" id="box11" class="editable-box1" oninput="function131()">
+            <p id="content3"> Try me </p>
         </div>
-    
+
     </div>
 
 
@@ -289,18 +289,43 @@
 
         let userCoordinates = document.getElementById("userCoordinates");
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                userCoordinates.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            userCoordinates.innerHTML = "Geolocation is not supported by this browser.";
+        }
+
 
         function showPosition(position) {
             userCoordinates.innerHTML = "Latitude: " + position.coords.latitude +
                 "<br>Longitude: " + position.coords.longitude;
         }
 
+        //********************TASK13********************
+
+        document.getElementById("box9").addEventListener("load", function132());
+
+        function function131() {
+
+            localStorage.setItem("localStorageData", content1.innerHTML);
+
+
+
+            let cookieBuffer = "cookieData="+content2.innerHTML;
+
+            document.cookie = "test=qqq"
+            document.cookie = cookieBuffer
+            console.log(document.cookie)
+
+        }
+
+        function function132() {
+
+
+            content1.innerHTML = localStorage.getItem("localStorageData");
+
+
+        }
 
 
     </script>
