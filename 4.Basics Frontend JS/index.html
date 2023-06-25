@@ -118,17 +118,27 @@
 
     <div class="box-row">
         <div contentEditable="true" id="box9" class="editable-box1" oninput="function131()">
-            <p id="content1"> Try me </p>
+            <p id="content1">Try Me</p>
         </div>
         <div contentEditable="true" id="box10" class="editable-box1" oninput="function131()">
-            <p id="content2"> Try me </p>
+            <p id="content2">Try Me</p>
         </div>
         <div contentEditable="true" id="box11" class="editable-box1" oninput="function131()">
-            <p id="content3"> Try me </p>
+            <p id="content3">Try Me</p>
         </div>
 
     </div>
 
+    <!-- ************TASK14************ -->
+    <div class="separator">Task 14</div>
+
+    <div id="boxTest" class="yellow-box1"></div>
+
+    <div class="button-center">
+        <button id="button7" type="button">Scroll Up</button>
+    </div>
+
+    <div id="boxBackground" class="box-back"></div>
 
 
 
@@ -303,26 +313,59 @@
 
         //********************TASK13********************
 
-        document.getElementById("box9").addEventListener("load", function132());
-
         function function131() {
+
+            //localStorage
 
             localStorage.setItem("localStorageData", content1.innerHTML);
 
+            console.log(content3.innerHTML)
 
-
-            let cookieBuffer = "cookieData="+content2.innerHTML;
-
-            document.cookie = "test=qqq"
+            //cookie
+            let cookieBuffer = `cookieData=${content2.innerHTML}`;
             document.cookie = cookieBuffer
-            console.log(document.cookie)
+
+            sessionStorage.setItem("sessionStorageData", content3.innerHTML);
 
         }
 
+        document.getElementById("box9").addEventListener("load", function132());
+
         function function132() {
 
+            //localStorage
+            if (localStorage.getItem("localStorageData") != null) {
+                content1.innerHTML = localStorage.getItem("localStorageData");
+            }
 
-            content1.innerHTML = localStorage.getItem("localStorageData");
+            //cookie
+            console.log(document.cookie)
+            let cookieDataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g);
+            if (cookieDataBuffer != null) {
+                let dataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g)[0].split("=");
+                content2.innerHTML = dataBuffer[1].slice(0, -1)
+            }
+
+            //sessionStorage
+            console.log("test: " + sessionStorage.getItem("sessionStorageData"))
+            if (sessionStorage.getItem("sessionStorageData") != null) {
+                content3.innerHTML = sessionStorage.getItem("sessionStorageData");
+            }
+        }
+
+        //********************TASK14********************
+
+        document.onscroll = event => {
+            clearTimeout(window.scrollEndTimer)
+            window.scrollEndTimer = setTimeout(callback, 1)
+            document.getElementById("button7").style.visibility = "visible";
+            document.getElementById("boxTest").style.backgroundColor = "red";
+        }
+
+        function function14() {
+
+            document.getElementById("button7").style.visibility = "visible";
+            document.getElementById("boxTest").style.backgroundColor = "red";
 
 
         }
