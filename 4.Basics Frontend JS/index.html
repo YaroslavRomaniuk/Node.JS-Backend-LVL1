@@ -132,13 +132,14 @@
     <!-- ************TASK14************ -->
     <div class="separator">Task 14</div>
 
-    <div id="boxTest" class="yellow-box1"></div>
-
     <div class="button-center">
         <button id="button7" type="button">Scroll Up</button>
     </div>
 
     <div id="boxBackground" class="box-back"></div>
+
+    <!-- ************TASK15************ -->
+    <div class="separator">Task 15</div>
 
 
 
@@ -339,7 +340,7 @@
             }
 
             //cookie
-            console.log(document.cookie)
+            //console.log(document.cookie)
             let cookieDataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g);
             if (cookieDataBuffer != null) {
                 let dataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g)[0].split("=");
@@ -347,7 +348,7 @@
             }
 
             //sessionStorage
-            console.log("test: " + sessionStorage.getItem("sessionStorageData"))
+            // console.log("test: " + sessionStorage.getItem("sessionStorageData"))
             if (sessionStorage.getItem("sessionStorageData") != null) {
                 content3.innerHTML = sessionStorage.getItem("sessionStorageData");
             }
@@ -355,20 +356,24 @@
 
         //********************TASK14********************
 
-        document.onscroll = event => {
-            clearTimeout(window.scrollEndTimer)
-            window.scrollEndTimer = setTimeout(callback, 1)
-            document.getElementById("button7").style.visibility = "visible";
-            document.getElementById("boxTest").style.backgroundColor = "red";
+        window.onscroll = function () { function141() };
+
+        function function141() {
+            if (document.documentElement.offsetHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight) {
+                document.getElementById("button7").style.visibility = "visible";
+            }
         }
 
-        function function14() {
+        document.getElementById("button7").addEventListener("click", function142);
 
-            document.getElementById("button7").style.visibility = "visible";
-            document.getElementById("boxTest").style.backgroundColor = "red";
-
-
+        function function142() {
+            window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
         }
+
+
 
 
     </script>
