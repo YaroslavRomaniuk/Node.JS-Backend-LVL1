@@ -10,6 +10,9 @@
 </head>
 
 <body>
+
+
+
     <!-- ************TASK1-2************ -->
     <div class="separator">Task 1-2</div>
     <div id="box1" class="black-box1"></div>
@@ -36,7 +39,6 @@
         <div id="box2" class="black-box2"></div>
         <div id="box2" class="black-box2"></div>
     </div>
-
     <div class="button-center">
         <button id="button5" type="submit">Visibility: hidden or visible</button>
     </div>
@@ -141,6 +143,32 @@
     <!-- ************TASK15************ -->
     <div class="separator">Task 15</div>
 
+    <div id="myDiv1">
+        <h2>Bubbling:</h2>
+        <p id="myP1">Click me!</p>
+    </div><br>
+
+    <!-- ************TASK16************ -->
+    <div class="separator">Task 16</div>
+
+    <div id="boxAboveAll" class="box-above"></div>
+    <div class="button-center">
+        <button id="button8" type="button">Try me!</button>
+    </div>
+
+    <!-- ************TASK17************ -->
+    <div class="separator">Task 17</div>
+
+    <div class="button-center">
+        <form><input id="buttonGO" type="submit" value="GO"></form>
+    </div>
+
+    <!-- ************TASK18************ -->
+    <div class="separator">Task 18</div>
+
+    <div class="drag-n-drop">
+        <input type="file" id="file_upload" multiple />
+    </div>
 
 
 
@@ -368,14 +396,44 @@
 
         function function142() {
             window.scrollTo({
-                    top: 0,
-                    behavior: "smooth",
-                });
+                top: 0,
+                behavior: "smooth",
+            });
+        }
+
+        //********************TASK15********************
+        document.getElementById("myP1").addEventListener("click", function () {
+            event.stopPropagation()
+            alert("You clicked the white element!");
+        }, false);
+
+        document.getElementById("myDiv1").addEventListener("click", function () {
+            alert("You clicked the orange element!");
+        }, false);
+
+        //********************TASK16********************
+
+        document.getElementById("button8").addEventListener("click", function151);
+        document.getElementById("boxAboveAll").addEventListener("click", function152);
+
+        function function151() {
+            document.getElementById("boxAboveAll").style.visibility = "visible";
+            document.body.classList.add("stop-scrolling");
+        }
+
+        function function152() {
+            document.getElementById("boxAboveAll").style.visibility = "hidden";
+            document.body.classList.remove("stop-scrolling");
         }
 
 
+        //********************TASK17********************
 
-
+        //form.addEventListener('submit', submitForm);
+        document.getElementById("buttonGO").addEventListener("click", function16);
+        function function16(event) {
+            event.preventDefault();
+        }
     </script>
 
 </body>
