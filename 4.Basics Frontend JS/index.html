@@ -357,6 +357,9 @@
             let cookieBuffer = `cookieData=${content2.innerHTML}`;
             document.cookie = cookieBuffer
 
+            console.log(document.cookie)
+        
+
             sessionStorage.setItem("sessionStorageData", content3.innerHTML);
 
         }
@@ -371,9 +374,11 @@
             }
 
             //cookie
-            let cookieDataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g);
+            console.log(document.cookie)
+            let cookieDataBuffer = document.cookie.match(/cookieData=[\w\d\s]+/g);
+            console.log(cookieDataBuffer)
             if (cookieDataBuffer != null) {
-                let dataBuffer = document.cookie.match(/cookieData=[\w\d\s]+\;/g)[0].split("=");
+                let dataBuffer = document.cookie.match(/cookieData=[\w\d\s]+/g)[0].split("=");
                 content2.innerHTML = dataBuffer[1].slice(0, -1)
             }
 
